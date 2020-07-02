@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::view('/{path?}', 'app');
+
+Route::get('/{path?}', ['uses' => 'ReactController@index',
+'as' => 'react', 'where' => ['path' => '.*']]);

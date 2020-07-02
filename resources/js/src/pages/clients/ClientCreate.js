@@ -1,44 +1,58 @@
-import React , {Component} from 'react';
-import api from '../../services/api';
-import {Link} from 'react-router-dom';
+  import React , {Component} from 'react';
+  import api from '../../services/api';
+  
 
-export default class ClientCreate extends Component{
-    constructor(){
-        super();
-        this.state = { 
-            clients: []
+  export default class ClientCreate extends Component{
+      constructor(props){
+          super(props);
+          this.state = { 
+              client:null,
+              name:'',
+              email:'',
+              password:''
+            };
+          }
+
+          handleSubmit(event){
+            event.preventDefault();
+          }
+
+          async getClient(){
+              const data = await api.get('/clients');
+              console.log(data);
+              this.setState({
+                  client: data.data
+              })
+            }
+       
+         componentDidMount(){
+         
         }
-    }
-     async getClients(){
-         const data = await api.get('/clients');
-         console.log(data);
-         this.setState({
-             clients: data.data
-         })
-
-     }
-    componentDidMount(){
-        this.getClients();
-    }
-    render(){
-        return(
-            <form>
-           
+     
+     
+      render(){
+          return(
+          <form>
             <div className="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+              <label >Name</label>
+              <input type="text" onChange={e => this.setState({name: e.target.value})} className="form-control" id="exampleName" placeholder="Name"/>
+            </div>
+            <div className="form-group">
+              <label >Email address</label>
+              <input type="email" onChange={e => this.setState({email: e.target.value})} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
               <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div className="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" className="form-control" id="exampleInputPassword1"/>
+              <label >Password</label>
+              <input type="password" onChange={e => this.setState({password: e.target.value})} className="form-control" id="exampleInputPassword1" placeholder="Password"/>
             </div>
-            <div className="form-group form-check">
+            <div className="form-check">
               <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-              <label className="form-check-label" for="exampleCheck1">Check me out</label>
+              <label className="form-check-label" >Check me out</label>
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+              <button type="submit" className="btn btn-primary">Submit</button>
           </form>
-            );
+                    
+              );
+        }
     }
-}
