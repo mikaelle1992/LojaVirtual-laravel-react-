@@ -17,6 +17,7 @@ export default function Routes() {
                     <Route exact path="/clients" component={ClientList} />
                     <Route exact path="/clients/create" component={ClientCreate} />
                     <Route exact path="/clients/:id" component={ClientShow} />
+                    <Route exact path="/clients/:id/edit" component={ClientCreate} />
                 </Switch>
 
             </div>

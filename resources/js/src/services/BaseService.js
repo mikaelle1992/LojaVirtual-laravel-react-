@@ -9,28 +9,19 @@ export default class BaseService {
         return api.get(`/${this.path}`);
     }
 
-    get(id) {
+    getOne(id) {
         return api.get(`/${this.path}/${id}`);
     }
 
-    store(data) {
-        return api.post(`/${this.path}`, data);
+    store(body) {
+        return api.post(`/${this.path}`, body);
     }
 
-    update(id, data) {
-        return api.put(`/${this.path}/${id}`, data);
+    update(id, body) {
+        return api.put(`/${this.path}/${id}`, body);
     }
 
     delete(id) {
         return api.delete(`/${this.path}/${id}`);
-    }
-
-    deleteAll() {
-        return api.delete(`/${this.path}`);
-    }
-
-    findBy(title) {
-
-        return api.get(`/${this.path}?title=${title}`);
     }
 }

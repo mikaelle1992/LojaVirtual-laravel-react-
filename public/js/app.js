@@ -70674,6 +70674,10 @@ function Routes() {
     exact: true,
     path: "/clients/:id",
     component: _pages_clients_ClientShow__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/clients/:id/edit",
+    component: _pages_clients_ClientCreate__WEBPACK_IMPORTED_MODULE_7__["default"]
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Footer__WEBPACK_IMPORTED_MODULE_5__["default"], null));
 }
 
@@ -70762,10 +70766,7 @@ function Header() {
     to: "/clients"
   }, "Clientes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "nav-item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    className: "nav-link",
-    to: "/clients/create"
-  }, "Cadastrar"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     className: "form-inline my-2 my-lg-0"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     className: "form-control mr-sm-2",
@@ -70811,8 +70812,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ClientCreate; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/api */ "./resources/js/src/services/api.js");
-/* harmony import */ var _services_ClientService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/ClientService */ "./resources/js/src/services/ClientService.js");
+/* harmony import */ var _services_ClientService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/ClientService */ "./resources/js/src/services/ClientService.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70851,12 +70852,13 @@ var ClientCreate = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      id: props.match.params.id,
       name: "",
       email: "",
       password: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.service = new _services_ClientService__WEBPACK_IMPORTED_MODULE_2__["default"]();
+    _this.service = new _services_ClientService__WEBPACK_IMPORTED_MODULE_1__["default"]();
     return _this;
   }
 
@@ -70871,32 +70873,72 @@ var ClientCreate = /*#__PURE__*/function (_Component) {
         email: this.state.email,
         password: this.state.password
       };
-      this.service.store(data).then(function (response) {
-        _this2.props.history.push('/clients');
 
-        console.log(response.data);
+      if (this.state.id) {
+        // atualizar
+        this.service.update(this.state.id, data).then(function (response) {
+          return _this2.props.history.push("/clients");
+        })["catch"](function (e) {
+          return console.log(e);
+        });
+      } else {
+        /// cadastar
+        this.service.store(data).then(function (response) {
+          _this2.props.history.push("/clients");
+
+          console.log(response.data);
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      }
+    }
+  }, {
+    key: "getClient",
+    value: function getClient(id) {
+      var _this3 = this;
+
+      this.service.getOne(id).then(function (response) {
+        var client = response.data;
+
+        _this3.setState({
+          name: client.name,
+          email: client.email,
+          password: client.password
+        });
       })["catch"](function (e) {
-        console.log(e);
+        return console.log(e);
       });
+    }
+  }, {
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      if (this.state.id) {
+        this.getClient(this.state.id);
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: ""
+        className: "card"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Cadastrar Cliente")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Nome"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        onChange: function onChange(e) {
-          return _this3.setState({
-            name: e.target.value
+        onChange: function onChange(event) {
+          return _this4.setState({
+            name: event.target.value
           });
         },
+        value: this.state.name,
         className: "form-control",
         placeholder: "Nome do cliente"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -70904,10 +70946,11 @@ var ClientCreate = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Endere\xE7o de email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "email",
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             email: e.target.value
           });
         },
+        value: this.state.email,
         className: "form-control",
         "aria-describedby": "emailHelp",
         placeholder: "Enter email"
@@ -70916,16 +70959,23 @@ var ClientCreate = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Senha"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         onChange: function onChange(e) {
-          return _this3.setState({
+          return _this4.setState({
             password: e.target.value
           });
         },
+        value: this.state.password,
         className: "form-control",
         placeholder: "Senha do cliente"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
+        className: "btn btn-success"
+      }, this.state.id ? 'Atualizar' : 'Cadastrar'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "/clients",
+        className: "ml-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
         className: "btn btn-primary"
-      }, "Cadastrar")));
+      }, "Voltar")))));
     }
   }]);
 
@@ -70998,6 +71048,7 @@ var ClientList = /*#__PURE__*/function (_Component) {
     _this.state = {
       clients: []
     };
+    _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_this));
     _this.service = new _services_ClientService__WEBPACK_IMPORTED_MODULE_3__["default"]();
     return _this;
   }
@@ -71036,6 +71087,17 @@ var ClientList = /*#__PURE__*/function (_Component) {
       return getClients;
     }()
   }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this2 = this;
+
+      this.service["delete"](id).then(function (response) {
+        return _this2.getClients();
+      })["catch"](function (e) {
+        return console.log(e);
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getClients();
@@ -71043,8 +71105,14 @@ var ClientList = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: ""
+        className: "card"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "card-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h2", null, "Lista de clientes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "card-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
         className: "table table-dark"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
@@ -71054,16 +71122,36 @@ var ClientList = /*#__PURE__*/function (_Component) {
       }, "Nome"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
         scope: "col"
       }, "Email"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
-        scope: "col"
+        scope: "col",
+        className: "text-center"
       }, "A\xE7\xF5es"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", null, this.state.clients.map(function (item) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
           key: item.id
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
           scope: "row"
-        }, item.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-          to: '/clients/' + item.id
-        }, "Detalhar")));
-      }))));
+        }, item.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", {
+          className: "text-center"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/clients/" + item.id
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-warning"
+        }, "Detalhar")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: "/clients/" + item.id + "/edit"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-primary ml-2"
+        }, "Editar")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-danger ml-2",
+          onClick: function onClick() {
+            return _this3.deleteItem(item.id);
+          }
+        }, "Deletar")));
+      })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "card-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        to: "/clients/create"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-primary"
+      }, "Cadastrar"))));
     }
   }]);
 
@@ -71088,7 +71176,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/api */ "./resources/js/src/services/api.js");
+/* harmony import */ var _services_ClientService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/ClientService */ "./resources/js/src/services/ClientService.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -71120,6 +71209,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var ClientShow = /*#__PURE__*/function (_Component) {
   _inherits(ClientShow, _Component);
 
@@ -71135,6 +71225,7 @@ var ClientShow = /*#__PURE__*/function (_Component) {
       client: null,
       id: props.match.params.id
     };
+    _this.service = new _services_ClientService__WEBPACK_IMPORTED_MODULE_2__["default"]();
     return _this;
   }
 
@@ -71142,22 +71233,21 @@ var ClientShow = /*#__PURE__*/function (_Component) {
     key: "getClient",
     value: function () {
       var _getClient = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(id) {
-        var data;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].get('/clients/' + id);
+                return this.service.getOne(id);
 
               case 2:
-                data = _context.sent;
-                console.log(data);
+                response = _context.sent;
                 this.setState({
-                  client: data.data
+                  client: response.data
                 });
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -71193,7 +71283,13 @@ var ClientShow = /*#__PURE__*/function (_Component) {
         scope: "col"
       }, "A\xE7\xF5es"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", null, this.state.client ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
         scope: "row"
-      }, this.state.client.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, this.state.client.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, this.state.client.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, "Cliente n\xE3o encontrado")))));
+      }, this.state.client.id), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, this.state.client.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, this.state.client.email), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, "Cliente n\xE3o encontrado")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+        to: "/clients",
+        className: "ml-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary"
+      }, "Voltar")));
     }
   }]);
 
@@ -71236,34 +71332,24 @@ var BaseService = /*#__PURE__*/function () {
       return _api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/".concat(this.path));
     }
   }, {
-    key: "get",
-    value: function get(id) {
+    key: "getOne",
+    value: function getOne(id) {
       return _api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/".concat(this.path, "/").concat(id));
     }
   }, {
     key: "store",
-    value: function store(data) {
-      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].post("/".concat(this.path), data);
+    value: function store(body) {
+      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].post("/".concat(this.path), body);
     }
   }, {
     key: "update",
-    value: function update(id, data) {
-      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].put("/".concat(this.path, "/").concat(id), data);
+    value: function update(id, body) {
+      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].put("/".concat(this.path, "/").concat(id), body);
     }
   }, {
     key: "delete",
     value: function _delete(id) {
       return _api__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/".concat(this.path, "/").concat(id));
-    }
-  }, {
-    key: "deleteAll",
-    value: function deleteAll() {
-      return _api__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/".concat(this.path));
-    }
-  }, {
-    key: "findBy",
-    value: function findBy(title) {
-      return _api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/".concat(this.path, "?title=").concat(title));
     }
   }]);
 
