@@ -4,7 +4,7 @@ import api from '../../services/api';
 export default class ClientShow extends Component{
     constructor(props){
         super(props);
-        this.state = { 
+        this.state = {
             client: null ,
              id: props.match.params.id
 
@@ -21,10 +21,10 @@ export default class ClientShow extends Component{
     componentWillMount(){
         this.getClient(this.state.id);
     }
-    
+
     render(){
         return(
-            <div className="container my-5" >
+            <div className="" >
                 <table className="table table-dark">
                     <thead>
                         <tr>
@@ -47,7 +47,7 @@ export default class ClientShow extends Component{
                                     <td>Cliente não encontrado</td>
                                 </tr>
                             )}
-                        
+
                     </tbody>
                 </table>
 

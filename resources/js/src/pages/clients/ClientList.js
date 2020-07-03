@@ -1,16 +1,18 @@
 import React , {Component} from 'react';
-import api from '../../services/api';
 import {Link} from 'react-router-dom';
+import ClientService from '../../services/ClientService';
 
 export default class ClientList extends Component{
     constructor(){
         super();
-        this.state = { 
+        this.state = {
             clients: []
         }
+
+        this.service = new ClientService();
     }
      async getClients(){
-         const data = await api.get('/clients');
+         const data = await this.service.getAll();
          console.log(data);
          this.setState({
              clients: data.data
@@ -22,7 +24,7 @@ export default class ClientList extends Component{
     }
     render(){
         return(
-         <div className = "container my-5">
+         <div className = "">
                 <table className="table table-dark">
                     <thead>
                         <tr>
@@ -43,7 +45,7 @@ export default class ClientList extends Component{
                                 </td>
                             </tr>
                         ))}
-                        
+
                     </tbody>
                 </table>
             </div>
