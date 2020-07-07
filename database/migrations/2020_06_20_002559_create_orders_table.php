@@ -19,6 +19,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('total', 8, 2);
             $table->enum('status', ['opened', 'finished', 'canceled']);         
             $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

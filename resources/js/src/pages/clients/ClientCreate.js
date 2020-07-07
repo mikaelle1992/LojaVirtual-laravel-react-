@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ClientService from "../../services/ClientService";
 import { Link } from "react-router-dom";
 
+
 export default class ClientCreate extends Component {
     constructor(props) {
         super(props);
@@ -15,43 +16,32 @@ export default class ClientCreate extends Component {
         this.service = new ClientService();
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
+        var result;
         var data = {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password
         };
-        if(this.state.id){ // atualizar
-            this.service
-                .update(this.state.id, data)
-                .then(response =>  this.props.history.push("/clients"))
-                .catch(e => console.log(e));
-        }else { /// cadastar
-            this.service
-                .store(data)
-                .then(response => {
-                    this.props.history.push("/clients");
-                    console.log(response.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                });
+        if (this.state.id) { // atualizar
+            result = await this.service.update(this.state.id, data);
+
+        } else { /// cadastar
+            result = await this.service.store(data);
+        }
+        if (result) {
+            this.props.history.push("/clients");
         }
     }
 
-    getClient(id) {
-        this.service
-            .getOne(id)
-            .then(response => {
-                const client = response.data;
-                this.setState({
-                    name: client.name,
-                    email: client.email,
-                    password: client.password,
-                });
-            })
-            .catch(e => console.log(e));
+    async getClient(id) {
+        const client = await this.service.getOne(id);
+        this.setState({
+            name: client.name,
+            email: client.email,
+            password: client.password,
+        });
     }
 
     componentWillMount() {
@@ -107,7 +97,7 @@ export default class ClientCreate extends Component {
                         </div>
 
                         <button type="submit" className="btn btn-success">
-                            {this.state.id ? 'Atualizar' :  'Cadastrar' }
+                            {this.state.id ? 'Atualizar' : 'Cadastrar'}
                         </button>
 
                         <Link to="/clients" className="ml-2">

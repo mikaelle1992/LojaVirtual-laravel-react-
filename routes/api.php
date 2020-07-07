@@ -24,6 +24,8 @@ Route::delete('/clients/{id}','ClientController@destroy');
 Route::apiResource('categories','CategoryController');
 Route::apiResource('users','UserController');
 Route::apiResource('products','ProductController');
+Route::apiResource('orders','OrdersController');
+
 
 
 

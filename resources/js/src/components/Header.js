@@ -19,7 +19,13 @@ export default function Header(){
                     <Link className="nav-link" to="/clients">Clientes</Link>
                     </li>
                     <li className="nav-item">
-                    
+                    <Link className="nav-link" to="/categories">Categorias</Link>
+                    </li>
+                    <li className="nav-item">
+                    <Link className="nav-link" to="/products">Produtos</Link>
+                    </li>
+                    <li className="nav-item">
+                    <Link className="nav-link" to="/orders">Pedidos</Link>
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">

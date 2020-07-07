@@ -1,26 +1,25 @@
 import React, { Component } from "react";
-import ClientService from "../../services/ClientService";
+import CategoryService from "../../services/CategoryService";
 import { Link } from "react-router-dom";
 
-export default class ClientShow extends Component {
+export default class CategoryShow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            client: null,
+            category: null,
             id: props.match.params.id
         };
-        this.service = new ClientService();
+        this.service = new CategoryService();
     }
-    async getClient(id) {
+    async getCategory(id) {
         const data = await this.service.getOne(id);
         this.setState({
-            client: data
+            category: data
         });
     }
     componentWillMount() {
-        this.getClient(this.state.id);
+        this.getCategory(this.state.id);
     }
-
     render() {
         return (
             <div className="">
@@ -29,28 +28,28 @@ export default class ClientShow extends Component {
                         <tr>
                             <th scope="col">id</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col">Descrição</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.client ? (
+                        {this.state.category ? (
                             <tr>
-                                <th scope="row">{this.state.client.id}</th>
-                                <td>{this.state.client.name}</td>
-                                <td>{this.state.client.email}</td>
-                                
+                                <th scope="row">{this.state.category.id}</th>
+                                <td>{this.state.category.name}</td>
+                                <td>{this.state.category.description}</td>
+
                             </tr>
                         ) : (
-                            <tr>
-                                <td>Cliente não encontrado</td>
-                            </tr>
-                        )}
+                                <tr>
+                                    <td>Catgoria nao encontrada</td>
+                                </tr>
+                            )}
                     </tbody>
                 </table>
-                <Link to="/clients" className="ml-2">
+                <Link to="/categories" className="ml-2">
                     <button type="button" className="btn btn-primary">Voltar</button>
                 </Link>
+
             </div>
         );
     }

@@ -1,27 +1,37 @@
 import api from "./api";
 
 export default class BaseService {
-    constructor(uri){
+    constructor(uri) {
         this.path = uri;
     }
 
-    getAll() {
-        return api.get(`/${this.path}`);
+    async getAll() {
+        return await api.get(`/${this.path}`)
+            .then(response => response.data)
+            .catch(err => console.log(err));
     }
 
-    getOne(id) {
-        return api.get(`/${this.path}/${id}`);
+    async getOne(id) {
+        return await api.get(`/${this.path}/${id}`)
+            .then(response => response.data)
+            .catch(err => console.log(err));
     }
 
-    store(body) {
-        return api.post(`/${this.path}`, body);
+    async store(body) {
+        return await api.post(`/${this.path}`, body)
+            .then(response => response.data)
+            .catch(err => console.log(err));
     }
 
-    update(id, body) {
-        return api.put(`/${this.path}/${id}`, body);
+    async update(id, body) {
+        return await api.put(`/${this.path}/${id}`, body)
+            .then(response => response.data)
+            .catch(err => console.log(err));
     }
 
-    delete(id) {
-        return api.delete(`/${this.path}/${id}`);
+    async delete(id) {
+        return await api.delete(`/${this.path}/${id}`)
+        .then(response => response.data)
+        .catch(err => console.log(err));
     }
 }

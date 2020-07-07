@@ -12,6 +12,12 @@ class ProductController extends BaseController
       $this->model=$product;
   } 
 
-   
+  public function store(Request $request)
+  {
+      $data = $request ->all();
+      $data['status']= 'active';
+      $model = $this ->model::create($data);
+      return response()->json($model, 201);
+  }
  
 }
