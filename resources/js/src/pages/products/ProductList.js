@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProductService from "../../services/ProductService";
 import { Link } from "react-router-dom";
 
+
 export default class ProductList extends Component {
     constructor() {
         super();
@@ -59,6 +60,7 @@ export default class ProductList extends Component {
                                     <td className="text-center">
                                         <Link to={"/products/" + item.id}>
                                             <button className="btn btn-warning">Detalhar</button>
+                                           
                                         </Link>
                                         <Link to={"/products/" + item.id + "/edit"}>
                                             <button className="btn btn-primary ml-2">Editar</button>
@@ -74,6 +76,7 @@ export default class ProductList extends Component {
                     <Link to="/products/create">
                         <button className="btn btn-primary">Cadastrar</button>
                     </Link>
+                    
                 </div>
             </div>
         );

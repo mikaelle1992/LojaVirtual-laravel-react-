@@ -11,5 +11,13 @@ class UserController extends BaseController
     {
         $this->model = $model;
     }
+    public function store(Request $request)
+    {
+        $data = $request ->all();
+        $data['password'] = bcrypt($data['password']);
+        $model = $this ->model::create($data);
+        return response()->json($model, 201);
+    }
+    
    
 }

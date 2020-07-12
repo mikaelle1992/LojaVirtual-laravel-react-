@@ -27,6 +27,5 @@ Route::apiResource('products','ProductController');
 Route::apiResource('orders','OrdersController');
 
 
-
-
-
+Route::post('auth/login', 'Api\AuthController@login');
+//Route::get('/users','Api\ApiUserController@index');
