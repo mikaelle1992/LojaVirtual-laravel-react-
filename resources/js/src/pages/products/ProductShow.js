@@ -1,6 +1,6 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import ProductService from "../../services/ProductService";
-
+import { Link } from "react-router-dom";
 
 export default class ProductShow extends Component{
     constructor(props){
@@ -13,7 +13,7 @@ export default class ProductShow extends Component{
     }
 
     async getProduct(id){
-        const data = await this.service.getOne();
+        const data = await this.service.getOne(id);
         this.setState({
             product:data
         });

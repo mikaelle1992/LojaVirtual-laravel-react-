@@ -5,7 +5,10 @@
 
 <a  href="https://packagist.org/packages/laravel/framework"><img  src="https://poser.pugx.org/laravel/framework/v/stable.svg"  alt="Latest Stable Version"></a>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 881d8e8984702f90ab7dc4f278da75fb6c19fb84
 
 
 ## Instalação
@@ -52,4 +55,7 @@ ou
 Inicie o seu próprio servidor
 
 `php artisan serve`
+<<<<<<< HEAD
+>>>>>>> 881d8e8984702f90ab7dc4f278da75fb6c19fb84
+=======
 >>>>>>> 881d8e8984702f90ab7dc4f278da75fb6c19fb84

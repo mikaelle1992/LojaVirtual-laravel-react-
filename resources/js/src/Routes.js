@@ -14,6 +14,7 @@ import ProductCreate from "./pages/products/ProductCreate";
 import ProductShow from "./pages/products/ProductShow";
 import OrdersList from "./pages/Orders/OrderList";
 import OrderCreate from "./pages/Orders/OrderCreate";
+import OrderShow from "./pages/Orders/OrderShow";
 
 export default function Routes() {
     return (
@@ -39,12 +40,12 @@ export default function Routes() {
 
                     <Route exact path="/orders" component={OrdersList} />
                     <Route exact path="/orders/create" component={OrderCreate} />
-
-
-
+                    <Route exact path="/orders/:id" component={OrderShow} />
+                    <Route exact path="/orders/:id/edit" component={OrderCreate} />
+                    
                 </Switch>
-                
-             </div>
+
+            </div>
             <Footer />
         </BrowserRouter>
     );
