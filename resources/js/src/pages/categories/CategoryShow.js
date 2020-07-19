@@ -41,7 +41,7 @@ export default class CategoryShow extends Component {
                             </tr>
                         ) : (
                                 <tr>
-                                    <td>Catgoria nao encontrada</td>
+                                    <td>Categoria nao encontrada</td>
                                 </tr>
                             )}
                     </tbody>
